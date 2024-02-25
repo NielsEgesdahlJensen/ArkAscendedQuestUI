@@ -10,10 +10,10 @@ This project requires PHP and Composer. To install, follow these steps:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/yourproject.git
+git clone https://github.com/nissemayn/ArkAscendedQuestApi.git
 
 # Navigate to the project directory
-cd yourproject
+cd ArkAscendedQuestApi
 
 # Install dependencies
 composer install
