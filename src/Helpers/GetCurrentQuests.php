@@ -76,7 +76,6 @@ class GetCurrentQuests {
                 $currentQuests[$key]['Description'] = Formatter::sanitizeDescription($value['Description']);
                 $currentQuests[$key]['OverallProgress'] = $percentage;
                 $currentQuests[$key]['Progress'] = $progressArray;
-                //$completedQuests[$key]['TimeStamp'] = Formatter::unixTimeToHuman($value['TimeStamp']);
             }
         }
         return $currentQuests;

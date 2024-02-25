@@ -1,5 +1,4 @@
 <?php
-
 namespace QuestApi\Controllers;
 
 use MeekroDB;
@@ -15,7 +14,6 @@ class DatabaseController extends MeekroDB {
         }
         return self::$_db;
     }
-    // End Singleton
 
     private ?MeekroDB $connection = NULL;
 

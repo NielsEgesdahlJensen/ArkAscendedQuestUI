@@ -1,0 +1,64 @@
+{
+    "database": {
+        "dbHost": "localhost",
+        "dbName": "databaseName",
+        "dbUser": "username",
+        "dbPassword": "password",
+        "dbPort": 3306,
+        "dbEncoding": "utf8"
+    },
+
+    "timezone": "Europe/Copenhagen",
+
+    "servicePort": 8080,
+
+    "discordlinkFeature": true,
+    
+    "playerStatistics": [
+        "Name",
+        "TribeName",
+        "TotalDeaths",
+        "TamedDinos",
+        "MinutesPlayed",
+        "WildDinoKills",
+        "QuestsCompleted",
+        "DailyQuestsCompleted",
+        "WeeklyQuestsCompleted",
+        "TotalQuestsCompleted",
+        "RareDinoKills",
+        "RareTamedDinos",
+        "SuperRareDinoKills"
+    ],
+
+    "trackedNameOverrides": {
+        "PvPDamage": "PvP Damage",
+        "PurpleOSDWaves": "Purple OSD Waves",
+        "MantiAplhaKills": "Manti Alpha Kills",
+        "GatherStimbarries": "Gather Stimberries"
+    },
+
+    "addSpacesToTrackedNames": true,
+    "linebreaksInProgress": true,
+
+    "ignoredTrackers": [
+        "eos_id",
+        "Name",
+        "TribeName",
+        "ServerEventsCompleted",
+        "PvPDamage",
+        "PlayerKills",
+        "ServerEventsGorilla",
+        "ServerEventsLava",
+        "ServerEventsManticore",
+        "ServerEventsQueen",
+        "PlayerDeaths"
+    ],
+
+    "leaderboardTrackers": [
+        "QuestsCompleted",
+        "DailyQuestsCompleted",
+        "WildDinoKills",
+        "TotalDeaths",
+        "MinutesPlayed"
+    ]
+}

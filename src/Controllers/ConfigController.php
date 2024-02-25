@@ -12,7 +12,6 @@ class ConfigController {
             echo "Config file not found. Exiting...";
             die();
         }
-        //print_r($config);
         return $config;
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace QuestApi\Endpoints;
 
 use Psr\Http\Message\ResponseInterface;
@@ -67,7 +66,6 @@ class PlayerStatistics implements ControllerInterface
                     $progress = Formatter::createProgressString($dailyStats, $dailyQuestRequirements);
                 }
 
-                //create an empty object
                 $dailyQuestObject = new \stdClass();
                 $dailyQuestObject->Name = $dailyQuest['Name'];
                 $dailyQuestObject->Progress = $progress;

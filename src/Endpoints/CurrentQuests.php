@@ -1,5 +1,4 @@
 <?php
-
 namespace QuestApi\Endpoints;
 
 use Psr\Http\Message\ResponseInterface;

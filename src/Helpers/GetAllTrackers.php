@@ -23,12 +23,10 @@ class GetAllTrackers {
             $config = (new ConfigController)->get();
             $ignoredTrackers = $config['ignoredTrackers'];
 
-            // remove ignoredTrackers from allTrackers
             foreach ($ignoredTrackers as $ignoredTracker) {
                 unset($allTrackers[$ignoredTracker]);
             }
 
-            // format allTrackers into filteredAllTrackers
             $filteredAllTrackers = [];
             foreach ($allTrackers as $key => $value) {
                 $filteredAllTrackers[Formatter::statName($key)] = $value;
