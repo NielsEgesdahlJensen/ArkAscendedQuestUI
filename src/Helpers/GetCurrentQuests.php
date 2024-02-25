@@ -40,6 +40,9 @@ class GetCurrentQuests {
         }
         else {
             $playerStats = (new GetPlayerStats($this->eos_id))->stats;
+            $allQuestsIds = array_column($currentQuests, 'QuestID');
+
+            $allQuestsRequirements = (new GetAllQuestsRequirements($allQuestsIds))->allQuestsRequirements;
 
             foreach ($currentQuests as $key => $value) {
                 $questId = $value['QuestID'];
@@ -47,7 +50,7 @@ class GetCurrentQuests {
                 $numRequired = 0;
                 $numProgress = 0;
 
-                $requirements = (new GetQuestRequirements($questId, 'normal'))->questRequirements;
+                $requirements = $allQuestsRequirements[$questId];
                 $requirementNames = array_keys($requirements);
                 $requirementValues = array_values($requirements);
 
