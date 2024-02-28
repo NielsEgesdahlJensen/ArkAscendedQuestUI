@@ -11,8 +11,6 @@
     "timezone": "Europe/Copenhagen",
 
     "servicePort": 8080,
-
-    "discordlinkFeature": true,
     
     "playerStatistics": [
         "Name",
