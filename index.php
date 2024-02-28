@@ -85,4 +85,4 @@ $servicePort = $config['servicePort'];
 $socket = new SocketServer("0.0.0.0:$servicePort");
 $http->listen($socket);
 
-echo "Server running at http://0.0.0.0:8080" . PHP_EOL;
+echo "Server running at http://0.0.0.0:$servicePort" . PHP_EOL;
