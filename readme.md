@@ -30,7 +30,7 @@ Follow these steps to get the project up and running:
 2. Navigate to the project directory.
 
     ```bash
-    cd yourproject
+    cd ArkAscendedQuestApi
     ```
 
 3. Install the necessary dependencies using Composer.
