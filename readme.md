@@ -2,15 +2,15 @@
 
 ## Description
 
-This is an api that provides endpoints for Lethal's lethalquests ascended plugin.
-I've made this to go hand in hand with The-God-Of-Noise's UI in Ark:Survival Ascended - But you can use it for whatever you want. (only your imagination is the limit.)
+Ark Ascended Quest API is a PHP-based application designed to provide endpoints for Lethal's lethalquests ascended plugin. Originally created to complement The-God-Of-Noise's UI in Ark: Survival Ascended, this API can be adapted for various other uses.
 
-Provided endpoints:
-- {eos_id}/currentquests (Show the current available quests for a player)
-- {eos_id}/completedquests (Shows the completed quests for a player)
-- {eos_id}/leaderboards (shows a leaderboard)
-- {eos_id}/statistics (shows various player statistics)
-- {eos_id}/trackers (shows all tracked stats for a player)
+The API provides the following endpoints:
+
+- `{eos_id}/currentquests`: Displays the current available quests for a player
+- `{eos_id}/completedquests`: Shows the completed quests for a player
+- `{eos_id}/leaderboards`: Displays a leaderboard
+- `{eos_id}/statistics`: Provides various player statistics
+- `{eos_id}/trackers`: Shows all tracked stats for a player
 
 ## Prerequisites
 

@@ -7,7 +7,7 @@
         "dbPort": 3306,
         "dbEncoding": "utf8"
     },
-
+   
     "timezone": "Europe/Copenhagen",
 
     "servicePort": 8080,
