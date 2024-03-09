@@ -8,6 +8,7 @@ use HttpSoft\Response\JsonResponse;
 use Tnapf\Router\Interfaces\ControllerInterface;
 use Exception;
 use QuestApi\Controllers\DatabaseController;
+use QuestApi\ResponseObjects\DiscordLinkResponse;
 
 class DiscordLink implements ControllerInterface
 {
@@ -36,9 +37,9 @@ class DiscordLink implements ControllerInterface
 
                 foreach ($existingUsers as $user) {
                     if ($user['eos_id'] == $eos_id && $user['discord_id'] != null) {
-                        return new JsonResponse([
-                            'error' => 'EOS_ID already linked.'
-                        ], 400);
+                        $responseObject = new DiscordLinkResponse($eos_id, 'EOS_ID already linked.');
+                        unset($responseObject->ActivationCode);
+                        return new JsonResponse($responseObject, 200);
                     }
 
                     else if ( $user ['eos_id'] == $eos_id && $user['activationcode'] != NULL ) {
@@ -46,10 +47,9 @@ class DiscordLink implements ControllerInterface
                             $db->delete("discordlink", "eos_id = %s", $eos_id);
                         }
                         else {
-                            return new JsonResponse([
-                                'error' => 'EOS_ID already waiting for activation.',
-                                'activationcode' => $user['activationcode']
-                            ], 400);
+                            $responseObject = new DiscordLinkResponse($eos_id, 'EOS_ID already waiting for activation.');
+                            $responseObject->ActivationCode = $user['activationcode'];
+                            return new JsonResponse($responseObject, 200);
                         }
                     }
                 }
@@ -62,11 +62,9 @@ class DiscordLink implements ControllerInterface
                     "timestamp" => time()
                 ]);
                 
-                $response = new JsonResponse([
-                    'eos_id' => $eos_id,
-                    'page' => 'discordlink',
-                    'activationcode' => $code
-                ]);
+                $responseObject = new DiscordLinkResponse($eos_id);
+                $responseObject->ActivationCode = $code;
+                $response = new JsonResponse($responseObject, 200);
 
                 return $response;
             }

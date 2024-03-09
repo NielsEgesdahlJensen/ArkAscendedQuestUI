@@ -43,6 +43,7 @@ class QuestApiInit
                     id INT(255) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                     eos_id VARCHAR(255) NOT NULL,
                     discord_id VARCHAR(255) NULL,
+                    discord_name VARCHAR(255) NULL,
                     activationcode INT(255) NULL,
                     timestamp INT(255) NOT NULL,
                     UNIQUE INDEX eos_id (eos_id),

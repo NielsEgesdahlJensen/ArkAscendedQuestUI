@@ -16,6 +16,7 @@ use QuestApi\Endpoints\CompletedQuests;
 use QuestApi\Endpoints\CurrentQuests;
 use QuestApi\Endpoints\Leaderboards;
 use QuestApi\Endpoints\Trackers;
+use Tnapf\Router\Exceptions\HttpNotFound;
 
 $init = new QuestApiInit();
 
@@ -56,6 +57,18 @@ $router->group(
         );
     }
 );
+
+$router->catch(
+    HttpNotFound::class,
+    static function (
+      ServerRequestInterface $request,
+      ResponseInterface $response,
+      RouteRunner $route
+    ) {
+      $response->getBody()->write("{$request->getUri()->getPath()} does not exist");
+      return $response;
+    }
+  );
 
 $router->catch(
     Throwable::class,
