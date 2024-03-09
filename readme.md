@@ -6,11 +6,16 @@ Ark Ascended Quest API is a PHP-based application designed to provide endpoints 
 
 The API provides the following endpoints:
 
+GET requests
 - `{eos_id}/currentquests`: Displays the current available quests for a player
 - `{eos_id}/completedquests`: Shows the completed quests for a player
 - `{eos_id}/leaderboards`: Displays a leaderboard
 - `{eos_id}/statistics`: Provides various player statistics
 - `{eos_id}/trackers`: Shows all tracked stats for a player
+- `{eos_id}/quest/{quest_id}`: Shows tracked data for a given quest
+
+POST requests
+- `{eos_id}/discordlink`: used in The-God-Of-Noise's UI to link a Discord user to an eos id. (Discord bot with functionality for this may or may not be released.) Feature is turned off by default in config.
 
 ## Prerequisites
 

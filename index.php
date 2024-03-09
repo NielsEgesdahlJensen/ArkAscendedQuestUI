@@ -55,6 +55,11 @@ $router->group(
             '/currentquests',
             New CurrentQuests()
         );
+
+        $router->get(
+            '/quest/{questId}',
+            New \QuestApi\Endpoints\Quest()
+        );
     }
 );
 

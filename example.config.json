@@ -11,6 +11,10 @@
     "timezone": "Europe/Copenhagen",
 
     "servicePort": 8080,
+
+    "includeModname": true,
+
+    "discordlinkFeature": false,
     
     "playerStatistics": [
         "Name",

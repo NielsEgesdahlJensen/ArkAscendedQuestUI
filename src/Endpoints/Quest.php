@@ -1,16 +1,17 @@
 <?php
+
 namespace QuestApi\Endpoints;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Tnapf\Router\Routing\RouteRunner;
 use HttpSoft\Response\JsonResponse;
-use QuestApi\Helpers\GetCurrentQuests;
+use QuestApi\Helpers\GetQuest;
 use Tnapf\Router\Interfaces\ControllerInterface;
-use QuestApi\ResponseObjects\CurrentQuestsResponse;
 use QuestApi\ResponseObjects\ErrorReponse;
+use QuestApi\ResponseObjects\QuestResponse;
 
-class CurrentQuests implements ControllerInterface
+class Quest implements ControllerInterface
 {
     public function handle(
         ServerRequestInterface $request,
@@ -18,17 +19,18 @@ class CurrentQuests implements ControllerInterface
         RouteRunner $route,
         ): ResponseInterface {
             $eos_id = $route->args->EOS_ID;
+            $questId = $route->args->questId;
 
-            $currentQuests = (new GetCurrentQuests($eos_id))->currentQuests;
+            $quest = (new GetQuest($eos_id, $questId))->quest;
 
-            if (count($currentQuests) === 0) {
+            if ( $quest === null ) {
                 return new JsonResponse(
-                    new ErrorReponse($eos_id, 'CurrentQuests', "No quests found..")
+                    new ErrorReponse($eos_id, 'Quest', "Quest not found for user..")
                 , 404);
             }
 
-            $responseObject = new CurrentQuestsResponse($eos_id);
-            $responseObject->CurrentQuests = $currentQuests;
+            $responseObject = new QuestResponse($eos_id);
+            $responseObject->Quest = $quest;
             return new JsonResponse($responseObject, 200);
         }
 }
