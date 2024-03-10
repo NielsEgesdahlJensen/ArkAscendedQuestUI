@@ -16,6 +16,7 @@ use QuestApi\Endpoints\CompletedQuests;
 use QuestApi\Endpoints\CurrentQuests;
 use QuestApi\Endpoints\Leaderboards;
 use QuestApi\Endpoints\Trackers;
+use React\Http\Browser;
 use Tnapf\Router\Exceptions\HttpNotFound;
 
 $init = new QuestApiInit();
@@ -103,4 +104,41 @@ $servicePort = $config['servicePort'];
 $socket = new SocketServer("0.0.0.0:$servicePort");
 $http->listen($socket);
 
-echo "Server running at http://0.0.0.0:$servicePort" . PHP_EOL;
+$client = new Browser();
+
+
+echo "Checking connection to port $servicePort... \n";
+
+$client->get('https://api.ipify.org?format=json', [
+    'Content-Type' => 'application/json'
+])->then(
+    function ($response) use ($client, $servicePort) {
+        $ip = json_decode($response->getBody())->ip;
+        $data['ip'] = $ip;
+
+        $data = [
+            'host' => $ip,
+            'ports' => [
+                $servicePort
+            ]
+        ];
+        $client->post('https://portchecker.io/api/v1/query', [
+            'Content-Type' => 'application/json'
+        ], json_encode($data))->then(
+            function ($response) use ($ip) {
+                $servicePort = json_decode($response->getBody())->check[0]->port;
+
+                $firewallStatus = json_decode($response->getBody())->check[0]->status ? "open" : "CLOSED!!!! - Please check your firewall settings.";
+                echo "Firewall status: " . $firewallStatus . PHP_EOL;
+                echo "Server running at http://$ip:$servicePort/" . PHP_EOL;
+            },
+            function ($e) {
+                echo $e->getMessage();
+            }
+        );
+    },
+    function ($e) {
+        echo $e->getMessage();
+    }
+);
+

@@ -23,15 +23,12 @@ class QuestApiInit
             die();
         }
 
-        echo "Database connection successful." . PHP_EOL;
-
         $table = $db->queryFirstRow("SHOW TABLES LIKE 'discordlink'");
 
         $config = (new ConfigController)->get();
         $discordLinkEnabled = (isset($config['discordlinkFeature'])) ? $config['discordlinkFeature'] : false;
 
         if ($discordLinkEnabled === false) {
-            echo "Discord link feature is disabled." . PHP_EOL;
             return;
         }
 
@@ -57,7 +54,7 @@ class QuestApiInit
             }
 
         } else {
-            echo "Table discordlink exists." . PHP_EOL;
+            echo "Database checks completed." . PHP_EOL;
         }
     }
 }
