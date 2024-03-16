@@ -4,10 +4,11 @@ require __DIR__ . '/vendor/autoload.php';
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use React\Http\HttpServer;
+use React\Http\Browser;
 use React\Socket\SocketServer;
 use Tnapf\Router\Router;
 use Tnapf\Router\Routing\RouteRunner;
-
+use Tnapf\Router\Exceptions\HttpNotFound;
 use QuestApi\Endpoints\DiscordLink;
 use QuestApi\Endpoints\PlayerStatistics;
 use QuestApi\Utils\QuestApiInit;
@@ -16,12 +17,19 @@ use QuestApi\Endpoints\CompletedQuests;
 use QuestApi\Endpoints\CurrentQuests;
 use QuestApi\Endpoints\Leaderboards;
 use QuestApi\Endpoints\Trackers;
-use React\Http\Browser;
-use Tnapf\Router\Exceptions\HttpNotFound;
+
 
 $init = new QuestApiInit();
 
 $router = new Router();
+
+$router->get(
+    '/',
+    static function (ServerRequestInterface $request, ResponseInterface $response): ResponseInterface {
+        $response->getBody()->write('Quest API is running!');
+        return $response;
+    }
+);
 
 $router->group(
     '/{EOS_ID}',

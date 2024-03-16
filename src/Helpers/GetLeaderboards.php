@@ -17,28 +17,55 @@ class GetLeaderboards {
     }
 
     public function getLeaderboard(string $type) : array|NULL {
+        echo "getting $type leaderboard....";
         $db = DatabaseController::getConnection();
         $config = (new ConfigController)->get();
         $myTribe = (new GetTribeFromEosID($this->eos_id))->TribeName;
 
         $leaderboardTrackers = $config['leaderboardTrackers'];
 
-        $leaderboardTrackersSql = '';
+        $sqlStatement = '';
 
         switch($type) {
             case 'player':
-                $leaderboardTrackersSql = implode(',', $leaderboardTrackers);
+
+                $leaderboard_Tracker_SQL = implode(',', $leaderboardTrackers);
+                $sqlStatement = sprintf("
+                SELECT
+                    eos_id,
+                    Name,
+                    TribeName,
+                %s
+                FROM
+                    `lethalquestsascended_stats`
+                ", $leaderboard_Tracker_SQL);
                 break;
+
             case 'tribe':
-                $leaderboardTrackersSqlArray = [];
-                foreach($leaderboardTrackers AS $key => $leaderboardTracker) {
-                    $leaderboardTrackersSqlArray[$key] = "SUM($leaderboardTracker) AS $leaderboardTracker";
+                $leaderboard_Tracker_SQL = '';
+                foreach($leaderboardTrackers AS $key => $Tracker) {
+                    $leaderboard_Tracker_SQL .= "SUM($Tracker) AS $Tracker";
+                
+                    end($leaderboardTrackers);
+                    if($key != key($leaderboardTrackers))
+                        $leaderboard_Tracker_SQL .= ",";
                 }
-                $leaderboardTrackersSql = implode(', ', $leaderboardTrackers);
+                $sqlStatement = sprintf("
+                SELECT
+                    TribeName,
+                    %s
+                FROM
+                    `lethalquestsascended_stats`
+                WHERE
+                    TribeName != ''
+                GROUP BY
+                    TribeName
+                ", $leaderboard_Tracker_SQL);
                 break;
         }
+            
 
-        $sqlStatement = sprintf("
+        /*$sqlStatement = sprintf("
                             SELECT
                                 eos_id,
                                 Name,
@@ -51,7 +78,7 @@ class GetLeaderboards {
                             ",
                             $leaderboardTrackersSql,
                             $type == 'tribe' ? "WHERE TribeName != ''" : '',
-                            $type == 'tribe' ? "GROUP BY TribeName" : '');
+                            $type == 'tribe' ? "GROUP BY TribeName" : '');*/
 
         $leaderboard = $db->query($sqlStatement);
 

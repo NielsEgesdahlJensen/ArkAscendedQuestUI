@@ -1,4 +1,5 @@
 <?php
+
 namespace QuestApi\Controllers;
 
 use MeekroDB;
