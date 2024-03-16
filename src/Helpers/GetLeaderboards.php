@@ -17,7 +17,6 @@ class GetLeaderboards {
     }
 
     public function getLeaderboard(string $type) : array|NULL {
-        echo "getting $type leaderboard....";
         $db = DatabaseController::getConnection();
         $config = (new ConfigController)->get();
         $myTribe = (new GetTribeFromEosID($this->eos_id))->TribeName;
@@ -63,22 +62,6 @@ class GetLeaderboards {
                 ", $leaderboard_Tracker_SQL);
                 break;
         }
-            
-
-        /*$sqlStatement = sprintf("
-                            SELECT
-                                eos_id,
-                                Name,
-                                TribeName,
-                                %s
-                            FROM
-                                `lethalquestsascended_stats`
-                            %s
-                            %s
-                            ",
-                            $leaderboardTrackersSql,
-                            $type == 'tribe' ? "WHERE TribeName != ''" : '',
-                            $type == 'tribe' ? "GROUP BY TribeName" : '');*/
 
         $leaderboard = $db->query($sqlStatement);
 
