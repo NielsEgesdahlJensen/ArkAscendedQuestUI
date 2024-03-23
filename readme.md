@@ -23,7 +23,7 @@ POST requests
 - - Modules needed:
 - - mysqli
 - - zip
-- Composer (https://getcomposer.org/download/)
+- Composer (https://getcomposer.org/download/) - Be sure to add the checkbox `Add PHP to path` during installation.
 
 ### Enabeling modules in php
 
