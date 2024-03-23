@@ -20,6 +20,9 @@ POST requests
 ## Prerequisites
 
 - PHP
+- - Modules needed:
+- - mysqli
+- - zip
 - Composer
 
 ## Installation
