@@ -19,11 +19,17 @@ POST requests
 
 ## Prerequisites
 
-- PHP
+- PHP (https://www.php.net/downloads.php)
 - - Modules needed:
 - - mysqli
 - - zip
-- Composer
+- Composer (https://getcomposer.org/download/)
+
+### Enabeling modules in php
+
+- Locate your current `php.ini` file. Typically in `c:\php\php.ini` on windows.
+- Find the lines with `;extension=mysqli` and `;extension=zip` and uncomment them. (Remove the ;)
+- Save the file.
 
 ## Installation
 
