@@ -17,7 +17,7 @@ Before you begin, make sure you have the following:
 
 ## Step 2: Configure PHP
 
-1. Rename the `php.ini-development` file in the PHP installation directory to `php.ini`.
+1. Rename the `php.ini-production` file in the PHP installation directory to `php.ini`.
 2. Open `php.ini` in a text editor.
 3. Uncomment the following lines by removing the semicolon (`;`) at the beginning of each line:
 
