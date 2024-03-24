@@ -25,7 +25,7 @@ POST requests
 - - zip
 - Composer (https://getcomposer.org/download/) - Be sure to add the checkbox `Add PHP to path` during installation.
 
-See Windows installation to get help: (windows-installation.md)
+See Windows installation to get help: [Windows Installation](windows-installation.md)
 
 ### Enabeling modules in php
 
