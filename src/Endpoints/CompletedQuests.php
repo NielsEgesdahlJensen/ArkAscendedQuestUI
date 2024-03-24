@@ -1,4 +1,5 @@
 <?php
+
 namespace QuestApi\Endpoints;
 
 use Psr\Http\Message\ResponseInterface;
@@ -16,19 +17,19 @@ class CompletedQuests implements ControllerInterface
         ServerRequestInterface $request,
         ResponseInterface $response,
         RouteRunner $route,
-        ): ResponseInterface {
-            $eos_id = $route->args->EOS_ID;
+    ): ResponseInterface {
+        $eos_id = $route->args->EOS_ID;
 
-            $completedQuests = (new GetCompletedQuests($eos_id))->completedQuests;
+        $completedQuests = (new GetCompletedQuests($eos_id))->completedQuests;
 
-            if (count($completedQuests) === 0) {
-                return new JsonResponse([
-                    new ErrorReponse($eos_id, 'CompletedQuests', "No quests completed.")
-                ], 404);
-            }
-
-            $responseObject = new CompletedQuestsResponse($eos_id);
-            $responseObject->CompletedQuests = $completedQuests;
-            return new JsonResponse($responseObject, 200);
+        if (count($completedQuests) === 0) {
+            return new JsonResponse([
+                new ErrorReponse($eos_id, 'CompletedQuests', "No quests completed.")
+            ], 404);
         }
+
+        $responseObject = new CompletedQuestsResponse($eos_id);
+        $responseObject->CompletedQuests = $completedQuests;
+        return new JsonResponse($responseObject, 200);
+    }
 }

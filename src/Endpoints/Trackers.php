@@ -1,4 +1,5 @@
 <?php
+
 namespace QuestApi\Endpoints;
 
 use Psr\Http\Message\ResponseInterface;
@@ -16,19 +17,19 @@ class Trackers implements ControllerInterface
         ServerRequestInterface $request,
         ResponseInterface $response,
         RouteRunner $route,
-        ): ResponseInterface {
-            $eos_id = $route->args->EOS_ID;
+    ): ResponseInterface {
+        $eos_id = $route->args->EOS_ID;
 
-            $allTrackers = (new GetAllTrackers($eos_id))->allTrackers;
+        $allTrackers = (new GetAllTrackers($eos_id))->allTrackers;
 
-            if (empty($allTrackers)) {
-                return new JsonResponse([
-                    new ErrorReponse($eos_id, 'Trackers', "Player not found.")
-                ], 404);
-            }
-
-            $responseObject = new TrackersResponse($eos_id);
-            $responseObject->Trackers = $allTrackers;
-            return new JsonResponse($responseObject, 200);
+        if (empty($allTrackers)) {
+            return new JsonResponse([
+                new ErrorReponse($eos_id, 'Trackers', "Player not found.")
+            ], 404);
         }
+
+        $responseObject = new TrackersResponse($eos_id);
+        $responseObject->Trackers = $allTrackers;
+        return new JsonResponse($responseObject, 200);
+    }
 }

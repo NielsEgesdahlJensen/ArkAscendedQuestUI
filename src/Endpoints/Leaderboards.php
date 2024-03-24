@@ -16,17 +16,17 @@ class Leaderboards implements ControllerInterface
         ServerRequestInterface $request,
         ResponseInterface $response,
         RouteRunner $route,
-        ): ResponseInterface {
-            $eos_id = $route->args->EOS_ID;
+    ): ResponseInterface {
+        $eos_id = $route->args->EOS_ID;
 
-            $leaderboards = new GetLeaderboards($eos_id);
-            $playerLeaderboard = $leaderboards->PlayerLeaderboard;
-            $tribeLeaderboard = $leaderboards->TribeLeaderboard;
+        $leaderboards = new GetLeaderboards($eos_id);
+        $playerLeaderboard = $leaderboards->PlayerLeaderboard;
+        $tribeLeaderboard = $leaderboards->TribeLeaderboard;
 
 
-            $responseObject = new LeaderboardsResponse($eos_id);
-            $responseObject->PlayerLeaderboard = $playerLeaderboard;
-            $responseObject->TribeLeaderboard = $tribeLeaderboard;
-            return new JsonResponse($responseObject, 200);
-        }
+        $responseObject = new LeaderboardsResponse($eos_id);
+        $responseObject->PlayerLeaderboard = $playerLeaderboard;
+        $responseObject->TribeLeaderboard = $tribeLeaderboard;
+        return new JsonResponse($responseObject, 200);
+    }
 }

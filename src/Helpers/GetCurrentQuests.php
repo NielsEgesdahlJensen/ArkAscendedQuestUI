@@ -1,21 +1,26 @@
 <?php
+
 namespace QuestApi\Helpers;
 
 use QuestApi\Controllers\DatabaseController;
 use QuestApi\Utils\Formatter;
 
-class GetCurrentQuests {
+class GetCurrentQuests
+{
     public string $eos_id;
     public array|NULL $currentQuests;
 
-    public function __construct(string $eos_id) {
+    public function __construct(string $eos_id)
+    {
         $this->eos_id = $eos_id;
         $this->currentQuests = $this->getCurrentQuests();
     }
 
-    public function getCurrentQuests() : array|NULL {
+    public function getCurrentQuests(): array|NULL
+    {
         $db = DatabaseController::getConnection();
-        $currentQuests = $db->query("
+        $currentQuests = $db->query(
+            "
                                     SELECT 
                                     	lethalquestsascended_quests_status.QuestID as QuestID,
                                     	lethalquestsascended_quests.Name as Name,
@@ -33,12 +38,12 @@ class GetCurrentQuests {
                                     AND
                                         lethalquestsascended_quests_status.Completed = 0 ORDER BY lethalquestsascended_quests_status.QuestID ASC                                       
                                     ",
-                                    $this->eos_id);
+            $this->eos_id
+        );
 
         if (count($currentQuests) === 0) {
             return NULL;
-        }
-        else {
+        } else {
             $playerStats = (new GetPlayerStats($this->eos_id))->stats;
             $allQuestsIds = array_column($currentQuests, 'QuestID');
 
@@ -65,14 +70,13 @@ class GetCurrentQuests {
 
                     array_push($progressArray, [
                         'Name' => Formatter::statName($requirementName),
-                        'Progress' => $progress.'/'.$requirement,
+                        'Progress' => $progress . '/' . $requirement,
                         'Percentage' => $progress > 0 ? floor(($progress / $requirement) * 100) : 0
                     ]);
                 }
                 if ($numProgress === 0) {
                     $percentage = 0;
-                }
-                else {
+                } else {
                     $percentage = floor(($numProgress / $numRequired) * 100);
                 }
 

@@ -1,28 +1,31 @@
 <?php
+
 namespace QuestApi\Helpers;
 
 use QuestApi\Controllers\DatabaseController;
 
-class GetQuestRequirements {
+class GetQuestRequirements
+{
     public int $questId;
     public string $questType;
     public array|NULL $questRequirements = NULL;
 
-    public function __construct(int $questId, string $questType) {
+    public function __construct(int $questId, string $questType)
+    {
         if ($questType === 'daily' || $questType === 'weekly' || $questType === 'normal') {
             $this->questId = $questId;
             $this->questType = $questType;
             $this->questRequirements = $this->getQuestRequirements();
-        }
-        else {
+        } else {
             throw new \Exception("Invalid quest type");
         }
     }
 
-    public function getQuestRequirements() : array|NULL {
+    public function getQuestRequirements(): array|NULL
+    {
         $db = DatabaseController::getConnection();
 
-        $ignoredColumns = ['rowid','ID', 'Name', 'Description'];
+        $ignoredColumns = ['rowid', 'ID', 'Name', 'Description'];
 
         if ($this->questType === 'normal') {
             $table = 'lethalquestsascended_quests';
@@ -30,16 +33,17 @@ class GetQuestRequirements {
             $table = 'lethalquestsascended_quests_' . $this->questType;
         }
 
-        $questRequirements = $db->queryFirstRow("
+        $questRequirements = $db->queryFirstRow(
+            "
                                     SELECT
                                         *
                                     FROM
-                                        ".$table."
+                                        " . $table . "
                                     WHERE
                                         ID = %i                                
                                     ",
-                                    $this->questId
-                                );
+            $this->questId
+        );
 
         $filteredQuestRequirements = array_filter(
             $questRequirements,
@@ -48,7 +52,7 @@ class GetQuestRequirements {
             },
             ARRAY_FILTER_USE_BOTH
         );
-        
+
         return $filteredQuestRequirements;
     }
 }

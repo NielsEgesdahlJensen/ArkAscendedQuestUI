@@ -52,7 +52,6 @@ class QuestApiInit
                 echo "Table creation failed: " . $e->getMessage() . PHP_EOL;
                 die();
             }
-
         } else {
             echo "Database checks completed." . PHP_EOL;
         }

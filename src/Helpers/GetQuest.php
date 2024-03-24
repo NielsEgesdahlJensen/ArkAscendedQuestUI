@@ -1,23 +1,28 @@
 <?php
+
 namespace QuestApi\Helpers;
 
 use QuestApi\Controllers\DatabaseController;
 use QuestApi\Utils\Formatter;
 
-class GetQuest {
+class GetQuest
+{
     public string $eos_id;
     public int $questId;
     public array|NULL $quest;
 
-    public function __construct(string $eos_id, int $questId) {
+    public function __construct(string $eos_id, int $questId)
+    {
         $this->eos_id = $eos_id;
         $this->questId = $questId;
         $this->quest = $this->getQuest();
     }
 
-    public function getQuest() : array|NULL {
+    public function getQuest(): array|NULL
+    {
         $db = DatabaseController::getConnection();
-        $quest = $db->query("
+        $quest = $db->query(
+            "
                                     SELECT 
                                     	lethalquestsascended_quests_status.QuestID as QuestID,
                                     	lethalquestsascended_quests.Name as Name,
@@ -37,13 +42,13 @@ class GetQuest {
                                     AND
                                         lethalquestsascended_quests_status.QuestID = %d                                   
                                     ",
-                                    $this->eos_id,
-                                    $this->questId);
+            $this->eos_id,
+            $this->questId
+        );
 
         if (empty($quest)) {
             return NULL;
-        }
-        else {
+        } else {
             $returnArray = [];
             $playerStats = (new GetPlayerStats($this->eos_id))->stats;
             $questsId = array_column($quest, 'QuestID');
@@ -66,7 +71,7 @@ class GetQuest {
 
                     array_push($progressArray, [
                         'Name' => Formatter::statName($requirementName),
-                        'Progress' => $progress.'/'.$requirement,
+                        'Progress' => $progress . '/' . $requirement,
                         'Percentage' => $progress > 0 ? floor(($progress / $requirement) * 100) : 0
                     ]);
                 }

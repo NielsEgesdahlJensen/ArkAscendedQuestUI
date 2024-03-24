@@ -1,22 +1,27 @@
 <?php
+
 namespace QuestApi\Helpers;
 
 use QuestApi\Controllers\DatabaseController;
 
-class GetAllQuestsRequirements {
+class GetAllQuestsRequirements
+{
     public $questIds;
     public $allQuestsRequirements = [];
-    public function __construct(array $questIds) {
+    public function __construct(array $questIds)
+    {
         $this->questIds = $questIds;
         $this->allQuestsRequirements = $this->getAllQuestsRequirements();
     }
 
-    public function getAllQuestsRequirements() : array {
+    public function getAllQuestsRequirements(): array
+    {
         $db = DatabaseController::getConnection();
 
         $ignoredColumns = ['rowid', 'ID', 'Name', 'Description'];
 
-        $questsRequirements = $db->query("
+        $questsRequirements = $db->query(
+            "
                                     SELECT
                                         *
                                     FROM
@@ -24,8 +29,8 @@ class GetAllQuestsRequirements {
                                     WHERE
                                         ID IN %li                               
                                     ",
-                                    $this->questIds
-                                );
+            $this->questIds
+        );
 
         $filteredQuestRequirements = [];
         foreach ($questsRequirements as $questRequirements) {

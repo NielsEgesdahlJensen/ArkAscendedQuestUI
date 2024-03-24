@@ -37,37 +37,37 @@ $router->group(
 
         $router->post(
             '/discordlink',
-            New DiscordLink()
+            new DiscordLink()
         );
 
         $router->get(
             '/statistics',
-            New PlayerStatistics()
+            new PlayerStatistics()
         );
 
         $router->get(
             '/completed',
-            New CompletedQuests()
+            new CompletedQuests()
         );
 
         $router->get(
             '/trackers',
-            New Trackers()
+            new Trackers()
         );
 
         $router->get(
             '/leaderboards',
-            New Leaderboards()
+            new Leaderboards()
         );
 
         $router->get(
             '/currentquests',
-            New CurrentQuests()
+            new CurrentQuests()
         );
 
         $router->get(
             '/quest/{questId}',
-            New \QuestApi\Endpoints\Quest()
+            new \QuestApi\Endpoints\Quest()
         );
     }
 );
@@ -75,14 +75,14 @@ $router->group(
 $router->catch(
     HttpNotFound::class,
     static function (
-      ServerRequestInterface $request,
-      ResponseInterface $response,
-      RouteRunner $route
+        ServerRequestInterface $request,
+        ResponseInterface $response,
+        RouteRunner $route
     ) {
-      $response->getBody()->write("{$request->getUri()->getPath()} does not exist");
-      return $response;
+        $response->getBody()->write("{$request->getUri()->getPath()} does not exist");
+        return $response;
     }
-  );
+);
 
 $router->catch(
     Throwable::class,
@@ -107,7 +107,7 @@ $http = new HttpServer(function (ServerRequestInterface $request) use ($router) 
 });
 
 $config = (new ConfigController)->get();
-$servicePort = $config['servicePort']; 
+$servicePort = $config['servicePort'];
 
 $socket = new SocketServer("0.0.0.0:$servicePort");
 $http->listen($socket);
@@ -149,4 +149,3 @@ $client->get('https://api.ipify.org?format=json', [
         echo $e->getMessage();
     }
 );
-

@@ -28,9 +28,7 @@ class TimeFormatter
 
         if ($secs > 0) {
             $parts[] = sprintf('%d second%s', $secs, $secs > 1 ? 's' : '');
-        }
-
-        else {
+        } else {
             $parts[] = '0 seconds';
         }
 

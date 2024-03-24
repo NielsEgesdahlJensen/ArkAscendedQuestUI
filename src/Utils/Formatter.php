@@ -1,5 +1,7 @@
 <?php
+
 namespace QuestApi\Utils;
+
 use QuestApi\Controllers\ConfigController;
 
 class Formatter
@@ -35,13 +37,13 @@ class Formatter
         $trackedNameOverrides = $config['trackedNameOverrides'];
         $addSpacesToTrackedNames = $config['addSpacesToTrackedNames'];
 
-        if(isset($trackedNameOverrides[$stat])) 
-        $statName = $trackedNameOverrides[$stat];
+        if (isset($trackedNameOverrides[$stat]))
+            $statName = $trackedNameOverrides[$stat];
 
         else if ($addSpacesToTrackedNames)
             $statName = preg_replace('/(?<!\b|\p{Lu})(?=\p{Lu})/', ' $0', $stat);
 
-        else 
+        else
             $statName = $stat;
 
         return $statName;
@@ -51,12 +53,12 @@ class Formatter
     {
         $config = (new ConfigController())->get();
 
-        if($unixTime === '0') return 'Timestamp missing!';
-        $dt = new \DateTime( '@'.$unixTime );
-        $dt -> setTimeZone( new \DateTimeZone( $config['timezone'] ) );
-        return $dt -> format( 'd-m-Y H:i' );
+        if ($unixTime === '0') return 'Timestamp missing!';
+        $dt = new \DateTime('@' . $unixTime);
+        $dt->setTimeZone(new \DateTimeZone($config['timezone']));
+        return $dt->format('d-m-Y H:i');
     }
-    
+
     public static function sanitizeDescription(string $descriptionString): string
     {
         return preg_replace("/\{[^}]+\}\//", "", $descriptionString);

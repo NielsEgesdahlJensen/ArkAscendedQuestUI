@@ -1,25 +1,28 @@
 <?php
+
 namespace QuestApi\Helpers;
 
 use QuestApi\Controllers\ConfigController;
 use QuestApi\Utils\Formatter;
 
-class GetAllTrackers {
+class GetAllTrackers
+{
     public string $eos_id;
     public array|NULL $allTrackers;
 
-    public function __construct(string $eos_id) {
+    public function __construct(string $eos_id)
+    {
         $this->eos_id = $eos_id;
         $this->allTrackers = $this->getAllTrackers();
     }
 
-    public function getAllTrackers() : array|NULL {
+    public function getAllTrackers(): array|NULL
+    {
         $allTrackers = (new GetPlayerStats($this->eos_id))->stats;
 
         if (empty($allTrackers)) {
             return NULL;
-        }
-        else {
+        } else {
             $config = (new ConfigController)->get();
             $ignoredTrackers = $config['ignoredTrackers'];
 

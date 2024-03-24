@@ -5,11 +5,12 @@ namespace QuestApi\Controllers;
 use MeekroDB;
 use QuestApi\Controllers\ConfigController;
 
-class DatabaseController extends MeekroDB {
-    // Singleton
+class DatabaseController extends MeekroDB
+{
     private static $_db = NULL;
-    
-    public static function getConnection(){
+
+    public static function getConnection()
+    {
         if (self::$_db === NULL) {
             self::$_db = new self();
         }
@@ -18,7 +19,8 @@ class DatabaseController extends MeekroDB {
 
     private ?MeekroDB $connection = NULL;
 
-    private function __construct() {
+    private function __construct()
+    {
         $config = (new ConfigController)->get();
         $databaseInfo = $config['database'];
 

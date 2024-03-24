@@ -17,20 +17,21 @@ class Quest implements ControllerInterface
         ServerRequestInterface $request,
         ResponseInterface $response,
         RouteRunner $route,
-        ): ResponseInterface {
-            $eos_id = $route->args->EOS_ID;
-            $questId = $route->args->questId;
+    ): ResponseInterface {
+        $eos_id = $route->args->EOS_ID;
+        $questId = $route->args->questId;
 
-            $quest = (new GetQuest($eos_id, $questId))->quest;
+        $quest = (new GetQuest($eos_id, $questId))->quest;
 
-            if ( $quest === null ) {
-                return new JsonResponse(
-                    new ErrorReponse($eos_id, 'Quest', "Quest not found for user..")
-                , 404);
-            }
-
-            $responseObject = new QuestResponse($eos_id);
-            $responseObject->Quest = $quest;
-            return new JsonResponse($responseObject, 200);
+        if ($quest === null) {
+            return new JsonResponse(
+                new ErrorReponse($eos_id, 'Quest', "Quest not found for user.."),
+                404
+            );
         }
+
+        $responseObject = new QuestResponse($eos_id);
+        $responseObject->Quest = $quest;
+        return new JsonResponse($responseObject, 200);
+    }
 }

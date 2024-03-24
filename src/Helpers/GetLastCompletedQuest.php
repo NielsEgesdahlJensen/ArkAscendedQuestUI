@@ -1,21 +1,26 @@
 <?php
+
 namespace QuestApi\Helpers;
 
 use QuestApi\Controllers\DatabaseController;
 use QuestApi\Utils\Formatter;
 
-class GetLastCompletedQuest {
+class GetLastCompletedQuest
+{
     public string $eos_id;
     public array|NULL $lastCompleted;
 
-    public function __construct(string $eos_id) {
+    public function __construct(string $eos_id)
+    {
         $this->eos_id = $eos_id;
         $this->lastCompleted = $this->getLastCompleted();
     }
 
-    public function getLastCompleted() : array|NULL {
+    public function getLastCompleted(): array|NULL
+    {
         $db = DatabaseController::getConnection();
-        $lastCompleted = $db->queryFirstRow("
+        $lastCompleted = $db->queryFirstRow(
+            "
                                             SELECT 
     	                                        lethalquestsascended_quests_status.QuestID as 'Quest ID',
     	                                        COALESCE( lethalquestsascended_quests.Name, lethalquestsascended_quests_daily.Name, lethalquestsascended_quests_weekly.Name ) as Name,
@@ -45,7 +50,8 @@ class GetLastCompletedQuest {
                                                 lethalquestsascended_quests_status.CompletedTimeStamp
                                             DESC LIMIT 0,1
                                             ",
-                                            $this->eos_id);
+            $this->eos_id
+        );
         $lastCompleted['TimeStamp'] = Formatter::unixTimeToHuman($lastCompleted['TimeStamp']);
         return $lastCompleted;
     }

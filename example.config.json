@@ -7,15 +7,10 @@
         "dbPort": 3306,
         "dbEncoding": "utf8"
     },
-   
     "timezone": "Europe/Copenhagen",
-
     "servicePort": 8080,
-
     "includeModname": true,
-
     "discordlinkFeature": false,
-    
     "playerStatistics": [
         "Name",
         "TribeName",
@@ -31,17 +26,14 @@
         "RareTamedDinos",
         "SuperRareDinoKills"
     ],
-
     "trackedNameOverrides": {
         "PvPDamage": "PvP Damage",
         "PurpleOSDWaves": "Purple OSD Waves",
         "MantiAplhaKills": "Manti Alpha Kills",
         "GatherStimbarries": "Gather Stimberries"
     },
-
     "addSpacesToTrackedNames": true,
     "linebreaksInProgress": true,
-
     "ignoredTrackers": [
         "eos_id",
         "Name",
@@ -55,7 +47,6 @@
         "ServerEventsQueen",
         "PlayerDeaths"
     ],
-
     "leaderboardTrackers": [
         "QuestsCompleted",
         "DailyQuestsCompleted",

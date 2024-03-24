@@ -1,4 +1,5 @@
 <?php
+
 namespace QuestApi\Endpoints;
 
 use Psr\Http\Message\ResponseInterface;
@@ -16,19 +17,20 @@ class CurrentQuests implements ControllerInterface
         ServerRequestInterface $request,
         ResponseInterface $response,
         RouteRunner $route,
-        ): ResponseInterface {
-            $eos_id = $route->args->EOS_ID;
+    ): ResponseInterface {
+        $eos_id = $route->args->EOS_ID;
 
-            $currentQuests = (new GetCurrentQuests($eos_id))->currentQuests;
+        $currentQuests = (new GetCurrentQuests($eos_id))->currentQuests;
 
-            if (count($currentQuests) === 0) {
-                return new JsonResponse(
-                    new ErrorReponse($eos_id, 'CurrentQuests', "No quests found..")
-                , 404);
-            }
-
-            $responseObject = new CurrentQuestsResponse($eos_id);
-            $responseObject->CurrentQuests = $currentQuests;
-            return new JsonResponse($responseObject, 200);
+        if (count($currentQuests) === 0) {
+            return new JsonResponse(
+                new ErrorReponse($eos_id, 'CurrentQuests', "No quests found.."),
+                404
+            );
         }
+
+        $responseObject = new CurrentQuestsResponse($eos_id);
+        $responseObject->CurrentQuests = $currentQuests;
+        return new JsonResponse($responseObject, 200);
+    }
 }

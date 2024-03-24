@@ -1,29 +1,33 @@
 <?php
+
 namespace QuestApi\Helpers;
 
 use QuestApi\Controllers\DatabaseController;
 
-class GetSpecialQuest {
+class GetSpecialQuest
+{
     public string $eos_id;
     public string $questType;
     public int $questTypeId;
     public array|NULL $specialQuest = NULL;
 
-    public function __construct(string $eos_id, string $questType) {
+    public function __construct(string $eos_id, string $questType)
+    {
         if ($questType === 'daily' || $questType === 'weekly') {
             $this->eos_id = $eos_id;
             $this->questType = $questType;
             $this->questTypeId = $questType === 'daily' ? 1 : 2;
             $this->specialQuest = $this->getSpecialQuest();
-        }
-        else {
+        } else {
             throw new \Exception("Invalid quest type");
         }
     }
 
-    public function getSpecialQuest() : array|NULL {
+    public function getSpecialQuest(): array|NULL
+    {
         $db = DatabaseController::getConnection();
-        $specialQuest = $db->queryFirstRow("
+        $specialQuest = $db->queryFirstRow(
+            "
                                     SELECT 
                                         lethalquestsascended_quests_status.QuestID as QuestID,
                                         lethalquestsascended_quests_%l.Name as Name,
@@ -41,13 +45,13 @@ class GetSpecialQuest {
                                     AND
                                         lethalquestsascended_quests_status.QuestType = %i
                                     ORDER BY lethalquestsascended_quests_status.TimeStamp DESC LIMIT 1",
-                                    $this->questType,
-                                    $this->questType,
-                                    $this->questType,
-                                    $this->questType,
-                                    $this->eos_id,
-                                    $this->questTypeId
-                                );
+            $this->questType,
+            $this->questType,
+            $this->questType,
+            $this->questType,
+            $this->eos_id,
+            $this->questTypeId
+        );
         return $specialQuest;
     }
 }

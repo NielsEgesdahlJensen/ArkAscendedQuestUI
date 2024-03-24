@@ -25,6 +25,8 @@ POST requests
 - - zip
 - Composer (https://getcomposer.org/download/) - Be sure to add the checkbox `Add PHP to path` during installation.
 
+See Windows installation to get help: (windows-installation.md)
+
 ### Enabeling modules in php
 
 - Locate your current `php.ini` file. Typically in `c:\php\php.ini` on windows.
