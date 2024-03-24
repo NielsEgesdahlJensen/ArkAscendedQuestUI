@@ -52,8 +52,23 @@ class QuestApiInit
                 echo "Table creation failed: " . $e->getMessage() . PHP_EOL;
                 die();
             }
-        } else {
-            echo "Database checks completed." . PHP_EOL;
         }
+
+        try {
+            // Check if lethalquests tables exists - Else quit
+            $table = $db->query("SHOW TABLES LIKE 'lethalquestsascended%'");
+
+            if (empty($table)) {
+                echo "Tables for lethalquests does not exist in this database. Quitting..." . PHP_EOL;
+                die();
+            }
+
+            echo "Table check completed." . PHP_EOL;
+        } catch (Exception $e) {
+            echo "Table check failed: " . $e->getMessage() . PHP_EOL;
+            die();
+        }
+
+        echo "Database checks completed." . PHP_EOL;
     }
 }

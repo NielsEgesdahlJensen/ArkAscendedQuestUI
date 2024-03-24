@@ -1,0 +1,57 @@
+{
+    "database": {
+        "dbHost": "localhost", //Database host. 
+        "dbName": "databaseName", //Database name
+        "dbUser": "username", //Database username
+        "dbPassword": "password", //Database password
+        "dbPort": 3306, //Database port
+        "dbEncoding": "utf8" //Database encoding
+    },
+    "timezone": "Europe/Copenhagen", //Timezone (used in quest completion time)
+    "servicePort": 8080, //Port the service will run on
+    "includeModname": true, //Include the modname in responses. Required for GON's UI mod
+    "discordlinkFeature": false, //Enable the discordlink feature (requires a discord bot)
+    "playerStatistics": [ //List of player statistics to track
+        "Name",
+        "TribeName",
+        "TotalDeaths",
+        "TamedDinos",
+        "MinutesPlayed",
+        "WildDinoKills",
+        "QuestsCompleted",
+        "DailyQuestsCompleted",
+        "WeeklyQuestsCompleted",
+        "TotalQuestsCompleted",
+        "RareDinoKills",
+        "RareTamedDinos",
+        "SuperRareDinoKills"
+    ],
+    "trackedNameOverrides": { //Overrides for the names of tracked statistics
+        "PvPDamage": "PvP Damage",
+        "PurpleOSDWaves": "Purple OSD Waves",
+        "MantiAplhaKills": "Manti Alpha Kills",
+        "GatherStimbarries": "Gather Stimberries"
+    },
+    "addSpacesToTrackedNames": true, //Add spaces to tracked names
+    "linebreaksInProgress": true, //Add linebreaks to in-progress quests
+    "ignoredTrackers": [ //Trackers to ignore on all trackers page
+        "eos_id",
+        "Name",
+        "TribeName",
+        "ServerEventsCompleted",
+        "PvPDamage",
+        "PlayerKills",
+        "ServerEventsGorilla",
+        "ServerEventsLava",
+        "ServerEventsManticore",
+        "ServerEventsQueen",
+        "PlayerDeaths"
+    ],
+    "leaderboardTrackers": [ //Trackers to show on the leaderboard
+        "QuestsCompleted",
+        "DailyQuestsCompleted",
+        "WildDinoKills",
+        "TotalDeaths",
+        "MinutesPlayed"
+    ]
+}
