@@ -72,6 +72,24 @@ $router->group(
     }
 );
 
+$router->group(
+    '/content',
+    static function (Router $router): void {
+        $router->get(
+            '/{file}',
+            static function (
+                ServerRequestInterface $request,
+                ResponseInterface $response,
+                RouteRunner $route
+            ) {
+                $file = $route->getParameter("file");
+                $response->getBody()->write(file_get_contents(__DIR__ . "/content/$file"));
+                return $response;
+            }
+        );
+    }
+);
+
 $router->catch(
     HttpNotFound::class,
     static function (
