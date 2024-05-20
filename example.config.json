@@ -53,5 +53,15 @@
         "WildDinoKills",
         "TotalDeaths",
         "MinutesPlayed"
-    ]
+    ],
+    "ModSurveilce": {
+        "enabled": true,
+        "discordWebhook": "",
+        "apiKey": "",
+        "interval": 1800,
+        "mods": {
+            "930403": {},
+            "940786": {}
+        }
+    }
 }

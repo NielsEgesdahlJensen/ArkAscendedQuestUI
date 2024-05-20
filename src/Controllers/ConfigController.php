@@ -15,4 +15,11 @@ class ConfigController
         }
         return $config;
     }
+
+    public static function set($config)
+    {
+        // Set config file without adding escape slashes
+        $configFile = __DIR__ . "/../../config.json";
+        file_put_contents($configFile, json_encode($config, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+    }
 }
