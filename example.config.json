@@ -55,7 +55,7 @@
         "MinutesPlayed"
     ],
     "ModSurveilce": {
-        "enabled": true,
+        "enabled": false,
         "discordWebhook": "",
         "apiKey": "",
         "interval": 1800,
