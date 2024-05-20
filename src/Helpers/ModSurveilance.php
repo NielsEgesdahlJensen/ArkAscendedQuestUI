@@ -45,15 +45,11 @@ class ModSurveilance
 
                     if (!isset($modInfo['latestFileId'])) {
                         $changed = true;
-                    }
-
-                    // Check if the version has changed
-                    elseif ($modInfo['latestFileId'] != $latestFileId) {
+                    } elseif ($modInfo['latestFileId'] != $latestFileId) {
                         $changed = true;
                     }
 
                     if ($changed) {
-                        //get changelog
                         $client = new Browser();
                         $response = $client->get(
                             self::$curseforgeBaseUri . '/v1/mods/' . $modId . '/files/' . $latestFileId . '/changelog',
@@ -95,15 +91,12 @@ class ModSurveilance
                                     'Content-Type' => 'application/json'
                                 ], json_encode($data, JSON_UNESCAPED_SLASHES))->then(
                                     function ($response) use ($modId, $latestFileId) {
-                                        // get config
                                         $config = ConfigController::get();
                                         $config['ModSurveilce']['mods'][$modId]['latestFileId'] = $latestFileId;
                                         ConfigController::set($config);
                                     },
                                     function ($e) {
                                         echo $e->getMessage() . PHP_EOL;
-
-                                        // get response body
                                         echo $e->getResponse()->getBody() . PHP_EOL;
                                     }
                                 );
@@ -111,78 +104,10 @@ class ModSurveilance
                         );
                     }
                 }
-
-                //Wait for all promises in the foreach loop to finish:
-
-
-
             },
             function ($e) {
                 echo $e->getMessage();
             }
         );
-
-        /*foreach ($modSurveilce['mods'] as $modId => $modInfo) {
-            $client = new Browser();
-            $response = $client->get(
-                self::$curseforgeBaseUri . '/v1/mods/' . $modId,
-                [
-                    'Content-Type' => 'application/json',
-                    'x-api-key' => $modSurveilce['apiKey']
-                ]
-            )->then(
-                function ($response) use ($modId, $modInfo, $config, $modSurveilce) {
-                    $changed = false;
-                    $modJson = (json_decode($response->getBody()))->data;
-                    $latestFileId = $modJson->latestFiles[0]->id;
-
-                    if (!isset($modInfo['latestFileId'])) {
-                        $changed = true;
-                    }
-
-                    // Check if the version has changed
-                    elseif ($modInfo['latestFileId'] != $latestFileId) {
-                        $changed = true;
-                    }
-
-                    if ($changed) {
-                        echo "Mod $modId has changed. Updating config..." . PHP_EOL;
-                        $config['ModSurveilce']['mods'][$modId]['latestFileId'] = $latestFileId;
-
-                        //get changelog
-                        $client = new Browser();
-                        $response = $client->get(
-                            self::$curseforgeBaseUri . '/v1/mods/' . $modId . '/files/' . $latestFileId . '/changelog',
-                            [
-                                'Content-Type' => 'application/json',
-                                'x-api-key' => $modSurveilce['apiKey']
-                            ]
-                        )->then(
-                            function ($response) use ($modId, $modJson, $config, $modSurveilce) {
-                                $changelog = json_decode($response->getBody())->data;
-                                echo "Changelog for mod $modId: $changelog" . PHP_EOL;
-
-                                $data = [
-                                    'content' => "Mod $modId has changed. New version: " . $modJson->latestFiles[0]->displayName . ". Changelog: $changelog"
-                                ];
-
-                                $client = new Browser();
-                                $client->post($modSurveilce['discordWebhook'], [
-                                    'Content-Type' => 'application/json'
-                                ], json_encode($data))->then(
-                                    function ($response) use ($config) {
-                                        echo "Notification sent to Discord" . PHP_EOL;
-                                        ConfigController::set($config);
-                                    },
-                                    function ($e) {
-                                        echo $e->getMessage();
-                                    }
-                                );
-                            },
-                        );
-                    }
-                }
-            );
-        }*/
     }
 }
