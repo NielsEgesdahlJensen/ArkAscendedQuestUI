@@ -180,7 +180,6 @@ if (isset($config['ModSurveilce'])) {
             echo "Checking for mod updates..." . PHP_EOL;
             ModSurveilance::CheckAllMods();
         });
-
         $loop->run();
     }
 }
