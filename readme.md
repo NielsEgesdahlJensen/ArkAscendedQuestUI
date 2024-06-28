@@ -13,6 +13,7 @@ GET requests
 - `{eos_id}/statistics`: Provides various player statistics
 - `{eos_id}/trackers`: Shows all tracked stats for a player
 - `{eos_id}/quest/{quest_id}`: Shows tracked data for a given quest
+- `content/{file}`: Option to self host static files in the content dir like dynamic server settings.
 
 POST requests
 - `{eos_id}/discordlink`: used in The-God-Of-Noise's UI to link a Discord user to an eos id. (Discord bot with functionality for this may or may not be released.) Feature is turned off by default in config.
