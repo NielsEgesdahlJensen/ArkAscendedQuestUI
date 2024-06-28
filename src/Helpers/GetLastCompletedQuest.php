@@ -52,6 +52,9 @@ class GetLastCompletedQuest
                                             ",
             $this->eos_id
         );
+
+        if (!$lastCompleted) return NULL;
+
         $lastCompleted['TimeStamp'] = Formatter::unixTimeToHuman($lastCompleted['TimeStamp']);
         return $lastCompleted;
     }

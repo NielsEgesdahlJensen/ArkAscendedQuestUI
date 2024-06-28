@@ -2,8 +2,11 @@
 
 namespace QuestApi\Helpers;
 
+use PSpell\Config;
 use QuestApi\Controllers\ConfigController;
 use React\Http\Browser;
+use React\Promise\Deferred;
+use React\Promise;
 
 class ModSurveilance
 {
@@ -35,7 +38,11 @@ class ModSurveilance
             function ($response) use ($modSurveilce, $config) {
                 $mods = json_decode($response->getBody())->data;
 
+                $deferreds = [];
                 foreach ($mods as $mod) {
+                    $deferred = new Deferred();
+                    $deferreds[] = $deferred;
+
                     $modId = $mod->id;
                     $latestFileId = $mod->latestFiles[0]->id;
 
@@ -58,7 +65,7 @@ class ModSurveilance
                                 'x-api-key' => $modSurveilce['apiKey']
                             ]
                         )->then(
-                            function ($response) use ($modId, $mod, $modSurveilce, $latestFileId) {
+                            function ($response) use ($modId, $mod, $modSurveilce, $latestFileId, $deferred) {
                                 $changelog = json_decode($response->getBody())->data;
                                 $changelog = str_replace('<br>', "\n", $changelog);
                                 $changelog = strip_tags($changelog);
@@ -90,20 +97,38 @@ class ModSurveilance
                                 $client->post($modSurveilce['discordWebhook'], [
                                     'Content-Type' => 'application/json'
                                 ], json_encode($data, JSON_UNESCAPED_SLASHES))->then(
-                                    function ($response) use ($modId, $latestFileId) {
+                                    function ($response) use ($modId, $latestFileId, $deferred) {
                                         $config = ConfigController::get();
                                         $config['ModSurveilce']['mods'][$modId]['latestFileId'] = $latestFileId;
-                                        ConfigController::set($config);
+                                        $deferred->resolve($config);
                                     },
-                                    function ($e) {
+                                    function ($e) use ($deferred) {
                                         echo $e->getMessage() . PHP_EOL;
                                         echo $e->getResponse()->getBody() . PHP_EOL;
+                                        $deferred->reject($e);
                                     }
                                 );
                             },
                         );
                     }
                 }
+
+                $promises = array_map(function ($deferred) {
+                    return $deferred->promise();
+                }, $deferreds);
+
+                Promise\all($promises)->then(
+                    function ($configs) {
+                        $mergedConfig = array_reduce($configs, function ($carry, $config) {
+                            return array_replace_recursive($carry, $config);
+                        }, []);
+                        ConfigController::set($mergedConfig);
+                        echo "Config updated\n";
+                    },
+                    function ($e) {
+                        echo $e->getMessage();
+                    }
+                );
             },
             function ($e) {
                 echo $e->getMessage();
