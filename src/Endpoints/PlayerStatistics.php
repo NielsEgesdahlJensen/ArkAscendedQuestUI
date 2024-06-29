@@ -10,6 +10,7 @@ use QuestApi\Helpers\GetDiscordLinked;
 use Tnapf\Router\Interfaces\ControllerInterface;
 use QuestApi\Helpers\GetPlayerStats;
 use QuestApi\Controllers\ConfigController;
+use QuestApi\Controllers\DatabaseController;
 use QuestApi\Helpers\GetLastCompletedQuest;
 use QuestApi\Helpers\GetQuestRequirements;
 use QuestApi\Helpers\GetSpecialQuest;
@@ -44,6 +45,22 @@ class PlayerStatistics implements ControllerInterface
         $discordLinked = $getDiscordLinked->discordLinked;
 
         $playerStats = array_intersect_key($playerStats, array_flip($config['playerStatistics']));
+
+        if ($config['CustomStatistics'] !== null) {
+            $db = DatabaseController::getConnection();
+            $customStats = $config['CustomStatistics'];
+            foreach ($customStats as $key => $value) {
+                $value = str_replace("{eos_id}", $eos_id, $value);
+
+                try {
+                    $stat = $db->queryFirstRow($value);
+                } catch (\Throwable $th) {
+                    $stat = "ERROR: Invalid expression in CustomStatistics. Error: " . $th->getMessage();
+                }
+
+                $playerStats[$key] = array_values($stat)[0];
+            }
+        }
 
         $playerStatsFormatted = [];
 
