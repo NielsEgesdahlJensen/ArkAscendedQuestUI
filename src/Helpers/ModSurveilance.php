@@ -2,7 +2,6 @@
 
 namespace QuestApi\Helpers;
 
-use PSpell\Config;
 use QuestApi\Controllers\ConfigController;
 use React\Http\Browser;
 use React\Promise\Deferred;
