@@ -17,7 +17,6 @@ use QuestApi\Endpoints\CompletedQuests;
 use QuestApi\Endpoints\CurrentQuests;
 use QuestApi\Endpoints\Leaderboards;
 use QuestApi\Endpoints\Trackers;
-use QuestApi\Helpers\ModSurveilance;
 use React\EventLoop\Loop;
 
 $init = new QuestApiInit();
@@ -168,18 +167,3 @@ $client->get('https://api.ipify.org?format=json', [
         echo $e->getMessage();
     }
 );
-
-if (isset($config['ModSurveilce'])) {
-    $modSurveilce = $config['ModSurveilce'];
-    if ($modSurveilce['enabled']) {
-        echo "ModSurveilce enabled" . PHP_EOL;
-        ModSurveilance::CheckAllMods();
-        $loop = Loop::get();
-        //Set a timer to check for mod updates every x seconds based on config
-        $loop->addPeriodicTimer($modSurveilce['interval'], function () {
-            echo "Checking for mod updates..." . PHP_EOL;
-            ModSurveilance::CheckAllMods();
-        });
-        $loop->run();
-    }
-}

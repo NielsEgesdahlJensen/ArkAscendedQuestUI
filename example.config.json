@@ -57,15 +57,5 @@
     "CustomStatistics": {
         "DailyDinoKills": "SELECT WildDinoKills FROM lethalquestsascended_stats_daily WHERE eos_id = '{eos_id}'",
         "WeeklyDinoKills": "SELECT WildDinoKills FROM lethalquestsascended_stats_weekly WHERE eos_id = '{eos_id}'"
-    },
-    "ModSurveilce": {
-        "enabled": false,
-        "discordWebhook": "",
-        "apiKey": "",
-        "interval": 1800,
-        "mods": {
-            "930403": {},
-            "940786": {}
-        }
     }
 }
