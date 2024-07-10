@@ -45,6 +45,11 @@ class GetCurrentQuests
             return NULL;
         } else {
             $playerStats = (new GetPlayerStats($this->eos_id))->stats;
+
+            if ($playerStats === NULL) {
+                return NULL;
+            }
+
             $allQuestsIds = array_column($currentQuests, 'QuestID');
 
             $allQuestsRequirements = (new GetAllQuestsRequirements($allQuestsIds))->allQuestsRequirements;
