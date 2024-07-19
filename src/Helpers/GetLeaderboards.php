@@ -114,7 +114,6 @@ class GetLeaderboards
             $i++;
         }
 
-        // Sprlit return array into mulitpe pages of 5
         $page = 1;
         $newReturnArray = [];
         foreach ($returnArray as $key => $value) {
@@ -123,7 +122,6 @@ class GetLeaderboards
                 $page++;
             }
         }
-        print_r($newReturnArray);
         return $newReturnArray;
     }
 }
