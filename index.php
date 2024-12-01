@@ -83,7 +83,7 @@ $router->group(
                 RouteRunner $route
             ) {
                 $file = $route->getParameter("file");
-                $response->getBody()->write(file_get_contents(__DIR__ . "/content/$file"));
+                $response->getBody()->write(file_get_contents(__DIR__ . "/content/" . basename($file)));
                 return $response;
             }
         );
